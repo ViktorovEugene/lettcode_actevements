@@ -57,11 +57,11 @@ class MainTest(unittest.TestCase):
 
     def test_repr(self):
         nodes_n_randoms = [
-            (Node(7, None), None),
-            (Node(13, None), 0),
-            (Node(11, None), 4),
-            (Node(10, None), 2),
-            (Node(1, None), 0),
+            (Node(7, ), None),
+            (Node(13, ), 0),
+            (Node(11, ), 4),
+            (Node(10, ), 2),
+            (Node(1, ), 0),
         ]
 
         head = self.assemble_nodes(nodes_n_randoms)
@@ -71,6 +71,21 @@ class MainTest(unittest.TestCase):
             Node.head_to_repr(head)
         )
 
+    def test_1(self):
+        nodes_n_randoms = [
+            (Node(7, None), None),
+            (Node(13, None), 0),
+            (Node(11, None), 4),
+            (Node(10, None), 2),
+            (Node(1, None), 0),
+        ]
+
+        head = self.assemble_nodes(nodes_n_randoms)
+        head_copy = Solution().copyRandomList(head)
+        self.assertEqual(
+            '[[7, null], [13, 0], [11, 4], [10, 2], [1, 0]]',
+            Node.head_to_repr(head_copy)
+        )
 
 if __name__ == '__main__':
     unittest.main()
