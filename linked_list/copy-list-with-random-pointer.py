@@ -15,7 +15,6 @@ class Node:
             yield next_node
             next_node = next_node.next_
 
-
     @staticmethod
     def head_to_repr(head: 'Node') -> str:
         id_to_index = {}
@@ -32,9 +31,37 @@ class Node:
             for node in head
         ]).replace('None', 'null')
 
+
 class Solution:
     def copyRandomList(self, head: Node) -> Node:
-        pass
+
+        items_identity_map = {}
+        current_node = head
+
+        previous_node_copy = Node(0)
+
+        while current_node:
+            current_node_copy = items_identity_map.get(id(current_node))
+
+            if not current_node_copy:
+                current_node_copy = Node(current_node.val)
+                items_identity_map[id(current_node)] = current_node_copy
+
+            previous_node_copy.next_ = current_node_copy
+
+            if current_node.random:
+                current_node_copy.random = items_identity_map.get(id(current_node.random))
+                if not current_node_copy.random:
+                    current_node_copy.random = Node(current_node.random.val)
+                    items_identity_map[id(current_node.random)] = current_node_copy.random
+
+            if not current_node.next_:
+                break
+
+            current_node = current_node.next_
+            previous_node_copy = current_node_copy
+
+        return items_identity_map[(id(head))]
 
 
 class MainTest(unittest.TestCase):
@@ -86,6 +113,7 @@ class MainTest(unittest.TestCase):
             '[[7, null], [13, 0], [11, 4], [10, 2], [1, 0]]',
             Node.head_to_repr(head_copy)
         )
+
 
 if __name__ == '__main__':
     unittest.main()
