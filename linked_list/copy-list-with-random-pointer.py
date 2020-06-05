@@ -61,7 +61,7 @@ class Solution:
             current_node = current_node.next_
             previous_node_copy = current_node_copy
 
-        return items_identity_map[(id(head))]
+        return items_identity_map.get((id(head)))
 
 
 class MainTest(unittest.TestCase):
@@ -113,6 +113,10 @@ class MainTest(unittest.TestCase):
             '[[7, null], [13, 0], [11, 4], [10, 2], [1, 0]]',
             Node.head_to_repr(head_copy)
         )
+
+    def test_2(self):
+        head_copy = Solution().copyRandomList(None)
+        self.assertIsNone(head_copy)
 
 
 if __name__ == '__main__':
